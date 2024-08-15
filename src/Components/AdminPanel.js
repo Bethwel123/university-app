@@ -2,164 +2,137 @@ import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const AdminPanel = () => {
-  const [newUniversity, setNewUniversity] = useState({
+  const [newCounty, setNewCounty] = useState({
     id: null,
     name: "",
-    location: "",
-    programmes: [{ name: "" }],
-    facilities: [{ name: "" }],
-    lecturers: [{ name: "" }],
-    gallery: [{ imageUrl: "" }],
+    universities: [
+      {
+        id: Date.now(),
+        name: "",
+        location: "",
+        programmes: [{ name: "", curriculum: "" }],
+        facilities: [{ name: "", description: "" }],
+        lecturers: [{ name: "", profile: "" }],
+        gallery: [{ imageUrl: "", description: "" }],
+      },
+      {
+        id: Date.now() + 1,
+        name: "",
+        location: "",
+        programmes: [{ name: "", curriculum: "" }],
+        facilities: [{ name: "", description: "" }],
+        lecturers: [{ name: "", profile: "" }],
+        gallery: [{ imageUrl: "", description: "" }],
+      },
+    ],
   });
-  const [universities, setUniversities] = useState([]);
-  const [editMode, setEditMode] = useState(false);
+
+  const [counties, setCounties] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/counties/1")
+    fetch("http://localhost:3000/counties")
       .then((res) => res.json())
-      .then((data) => {
-        setUniversities(data.universities || []);
-      })
-      .catch((error) => console.error("Error fetching universities:", error));
+      .then((data) => setCounties(data))
+      .catch((error) => console.error("Error fetching counties:", error));
   }, []);
 
-  const handleChange = (e) => {
-    setNewUniversity({ ...newUniversity, [e.target.name]: e.target.value });
-  };
+  const handleChange = (e, type, index, subIndex) => {
+    const { name, value } = e.target;
 
-  const handleProgrammeChange = (e, index) => {
-    const updatedProgrammes = [...newUniversity.programmes];
-    updatedProgrammes[index] = {
-      ...updatedProgrammes[index],
-      name: e.target.value,
-    };
-    setNewUniversity({ ...newUniversity, programmes: updatedProgrammes });
-  };
+    setNewCounty((prevCounty) => {
+      const updatedUniversities = [...prevCounty.universities];
 
-  const handleFacilityChange = (e, index) => {
-    const updatedFacilities = [...newUniversity.facilities];
-    updatedFacilities[index] = {
-      ...updatedFacilities[index],
-      name: e.target.value,
-    };
-    setNewUniversity({ ...newUniversity, facilities: updatedFacilities });
-  };
-
-  const handleLecturerChange = (e, index) => {
-    const updatedLecturers = [...newUniversity.lecturers];
-    updatedLecturers[index] = {
-      ...updatedLecturers[index],
-      name: e.target.value,
-    };
-    setNewUniversity({ ...newUniversity, lecturers: updatedLecturers });
-  };
-
-  const handleGalleryChange = (e, index) => {
-    const updatedGallery = [...newUniversity.gallery];
-    updatedGallery[index] = {
-      ...updatedGallery[index],
-      imageUrl: e.target.value,
-    };
-    setNewUniversity({ ...newUniversity, gallery: updatedGallery });
-  };
-
-  const handleAddProgramme = () => {
-    setNewUniversity({
-      ...newUniversity,
-      programmes: [...newUniversity.programmes, { name: "" }],
+      if (type === "county") {
+        return { ...prevCounty, [name]: value };
+      } else if (type === "university") {
+        updatedUniversities[index] = {
+          ...updatedUniversities[index],
+          [name]: value,
+        };
+        return { ...prevCounty, universities: updatedUniversities };
+      } else {
+        const updatedItems = updatedUniversities[index][type].map((item, i) =>
+          i === subIndex ? { ...item, [name]: value } : item
+        );
+        updatedUniversities[index] = {
+          ...updatedUniversities[index],
+          [type]: updatedItems,
+        };
+        return { ...prevCounty, universities: updatedUniversities };
+      }
     });
   };
 
-  const handleAddFacility = () => {
-    setNewUniversity({
-      ...newUniversity,
-      facilities: [...newUniversity.facilities, { name: "" }],
-    });
-  };
+  const handleAddField = (type, index) => {
+    setNewCounty((prevCounty) => {
+      const updatedUniversities = [...prevCounty.universities];
+      const newField =
+        type === "programme"
+          ? { name: "", curriculum: "" }
+          : type === "facility"
+          ? { name: "", description: "" }
+          : type === "lecturer"
+          ? { name: "", profile: "" }
+          : { imageUrl: "", description: "" };
 
-  const handleAddLecturer = () => {
-    setNewUniversity({
-      ...newUniversity,
-      lecturers: [...newUniversity.lecturers, { name: "" }],
-    });
-  };
-
-  const handleAddGallery = () => {
-    setNewUniversity({
-      ...newUniversity,
-      gallery: [...newUniversity.gallery, { imageUrl: "" }],
+      updatedUniversities[index][type].push(newField);
+      return { ...prevCounty, universities: updatedUniversities };
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!newUniversity.name || !newUniversity.location) {
-      console.error("Name and Location are required.");
+    if (!newCounty.name) {
+      console.error("County name is required.");
       return;
     }
 
     try {
-      let updatedUniversities;
-      if (editMode) {
-        updatedUniversities = universities.map((university) =>
-          university.id === newUniversity.id ? newUniversity : university
-        );
-      } else {
-        const id = Date.now();
-        updatedUniversities = [...universities, { ...newUniversity, id }];
-      }
+      const newCountyData = {
+        ...newCounty,
+        id: Date.now(),
+      };
 
-      const response = await fetch("http://localhost:3000/counties/1", {
-        method: "PATCH",
+      const updatedCounties = [...counties, newCountyData];
+
+      const response = await fetch("http://localhost:3000/counties", {
+        method: "PUT", // Use POST for creating a new county
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ universities: updatedUniversities }),
+        body: JSON.stringify(updatedCounties),
       });
 
       if (response.ok) {
-        setUniversities(updatedUniversities);
-        setNewUniversity({
+        setCounties(updatedCounties);
+        setNewCounty({
           id: null,
           name: "",
-          location: "",
-          programmes: [{ name: "" }],
-          facilities: [{ name: "" }],
-          lecturers: [{ name: "" }],
-          gallery: [{ imageUrl: "" }],
+          universities: [
+            {
+              id: Date.now(),
+              name: "",
+              location: "",
+              programmes: [{ name: "", curriculum: "" }],
+              facilities: [{ name: "", description: "" }],
+              lecturers: [{ name: "", profile: "" }],
+              gallery: [{ imageUrl: "", description: "" }],
+            },
+            {
+              id: Date.now() + 1,
+              name: "",
+              location: "",
+              programmes: [{ name: "", curriculum: "" }],
+              facilities: [{ name: "", description: "" }],
+              lecturers: [{ name: "", profile: "" }],
+              gallery: [{ imageUrl: "", description: "" }],
+            },
+          ],
         });
-        setEditMode(false);
-        console.log("University created/updated successfully");
+        console.log("County and universities added successfully");
       } else {
-        console.error("Error creating/updating university");
+        console.error("Error adding county and universities");
       }
     } catch (error) {
-      console.error("Error creating/updating university:", error);
-    }
-  };
-
-  const handleEdit = (index) => {
-    setNewUniversity({ ...universities[index] });
-    setEditMode(true);
-  };
-
-  const handleDelete = async (id) => {
-    const updatedUniversities = universities.filter(
-      (university) => university.id !== id
-    );
-    try {
-      const response = await fetch("http://localhost:3000/counties/1", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ universities: updatedUniversities }),
-      });
-
-      if (response.ok) {
-        setUniversities(updatedUniversities);
-        console.log("University deleted successfully");
-      } else {
-        console.error("Error deleting university");
-      }
-    } catch (error) {
-      console.error("Error deleting university:", error);
+      console.error("Error adding county and universities:", error);
     }
   };
 
@@ -169,157 +142,241 @@ const AdminPanel = () => {
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
-            Name:
+            County Name:
           </label>
           <input
             type="text"
             id="name"
             name="name"
-            value={newUniversity.name}
-            onChange={handleChange}
-            className="form-control"
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="location" className="form-label">
-            Location:
-          </label>
-          <input
-            type="text"
-            id="location"
-            name="location"
-            value={newUniversity.location}
-            onChange={handleChange}
+            value={newCounty.name}
+            onChange={(e) => handleChange(e, "county")}
             className="form-control"
           />
         </div>
 
-        <h3>Programmes:</h3>
-        {newUniversity.programmes.map((programme, index) => (
-          <div key={index} className="mb-3">
-            <label htmlFor={`programme-${index}`} className="form-label">
-              Programme {index + 1}:
-            </label>
-            <input
-              type="text"
-              id={`programme-${index}`}
-              value={programme.name}
-              onChange={(e) => handleProgrammeChange(e, index)}
-              className="form-control"
-            />
-          </div>
-        ))}
-        <button
-          type="button"
-          onClick={handleAddProgramme}
-          className="btn btn-secondary mb-3"
-        >
-          Add Programme
-        </button>
+        {newCounty.universities.map((university, index) => (
+          <div key={university.id}>
+            <h3>University {index + 1}:</h3>
+            <div className="mb-3">
+              <label
+                htmlFor={`university-name-${index}`}
+                className="form-label"
+              >
+                Name:
+              </label>
+              <input
+                type="text"
+                id={`university-name-${index}`}
+                name="name"
+                value={university.name}
+                onChange={(e) => handleChange(e, "university", index)}
+                className="form-control"
+              />
+            </div>
+            <div className="mb-3">
+              <label
+                htmlFor={`university-location-${index}`}
+                className="form-label"
+              >
+                Location:
+              </label>
+              <input
+                type="text"
+                id={`university-location-${index}`}
+                name="location"
+                value={university.location}
+                onChange={(e) => handleChange(e, "university", index)}
+                className="form-control"
+              />
+            </div>
 
-        <h3>Facilities:</h3>
-        {newUniversity.facilities.map((facility, index) => (
-          <div key={index} className="mb-3">
-            <label htmlFor={`facility-${index}`} className="form-label">
-              Facility {index + 1}:
-            </label>
-            <input
-              type="text"
-              id={`facility-${index}`}
-              value={facility.name}
-              onChange={(e) => handleFacilityChange(e, index)}
-              className="form-control"
-            />
-          </div>
-        ))}
-        <button
-          type="button"
-          onClick={handleAddFacility}
-          className="btn btn-secondary mb-3"
-        >
-          Add Facility
-        </button>
+            <h4>Programmes:</h4>
+            {university.programmes.map((programme, subIndex) => (
+              <div key={subIndex} className="mb-3">
+                <label
+                  htmlFor={`programme-name-${index}-${subIndex}`}
+                  className="form-label"
+                >
+                  Programme Name:
+                </label>
+                <input
+                  type="text"
+                  id={`programme-name-${index}-${subIndex}`}
+                  name="name"
+                  value={programme.name}
+                  onChange={(e) =>
+                    handleChange(e, "programme", index, subIndex)
+                  }
+                  className="form-control"
+                />
+                <label
+                  htmlFor={`programme-curriculum-${index}-${subIndex}`}
+                  className="form-label"
+                >
+                  Curriculum:
+                </label>
+                <input
+                  type="text"
+                  id={`programme-curriculum-${index}-${subIndex}`}
+                  name="curriculum"
+                  value={programme.curriculum}
+                  onChange={(e) =>
+                    handleChange(e, "programme", index, subIndex)
+                  }
+                  className="form-control"
+                />
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={() => handleAddField("programmes", index)}
+              className="btn btn-secondary mb-3"
+            >
+              Add Programme
+            </button>
 
-        <h3>Lecturers:</h3>
-        {newUniversity.lecturers.map((lecturer, index) => (
-          <div key={index} className="mb-3">
-            <label htmlFor={`lecturer-${index}`} className="form-label">
-              Lecturer {index + 1}:
-            </label>
-            <input
-              type="text"
-              id={`lecturer-${index}`}
-              value={lecturer.name}
-              onChange={(e) => handleLecturerChange(e, index)}
-              className="form-control"
-            />
-          </div>
-        ))}
-        <button
-          type="button"
-          onClick={handleAddLecturer}
-          className="btn btn-secondary mb-3"
-        >
-          Add Lecturer
-        </button>
+            <h4>Facilities:</h4>
+            {university.facilities.map((facility, subIndex) => (
+              <div key={subIndex} className="mb-3">
+                <label
+                  htmlFor={`facility-name-${index}-${subIndex}`}
+                  className="form-label"
+                >
+                  Facility Name:
+                </label>
+                <input
+                  type="text"
+                  id={`facility-name-${index}-${subIndex}`}
+                  name="name"
+                  value={facility.name}
+                  onChange={(e) => handleChange(e, "facility", index, subIndex)}
+                  className="form-control"
+                />
+                <label
+                  htmlFor={`facility-description-${index}-${subIndex}`}
+                  className="form-label"
+                >
+                  Description:
+                </label>
+                <input
+                  type="text"
+                  id={`facility-description-${index}-${subIndex}`}
+                  name="description"
+                  value={facility.description}
+                  onChange={(e) => handleChange(e, "facility", index, subIndex)}
+                  className="form-control"
+                />
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={() => handleAddField("facilities", index)}
+              className="btn btn-secondary mb-3"
+            >
+              Add Facility
+            </button>
 
-        <h3>Gallery:</h3>
-        {newUniversity.gallery.map((image, index) => (
-          <div key={index} className="mb-3">
-            <label htmlFor={`gallery-${index}`} className="form-label">
-              Image URL {index + 1}:
-            </label>
-            <input
-              type="text"
-              id={`gallery-${index}`}
-              value={image.imageUrl}
-              onChange={(e) => handleGalleryChange(e, index)}
-              className="form-control"
-            />
+            <h4>Lecturers:</h4>
+            {university.lecturers.map((lecturer, subIndex) => (
+              <div key={subIndex} className="mb-3">
+                <label
+                  htmlFor={`lecturer-name-${index}-${subIndex}`}
+                  className="form-label"
+                >
+                  Lecturer Name:
+                </label>
+                <input
+                  type="text"
+                  id={`lecturer-name-${index}-${subIndex}`}
+                  name="name"
+                  value={lecturer.name}
+                  onChange={(e) => handleChange(e, "lecturer", index, subIndex)}
+                  className="form-control"
+                />
+                <label
+                  htmlFor={`lecturer-profile-${index}-${subIndex}`}
+                  className="form-label"
+                >
+                  Profile:
+                </label>
+                <input
+                  type="text"
+                  id={`lecturer-profile-${index}-${subIndex}`}
+                  name="profile"
+                  value={lecturer.profile}
+                  onChange={(e) => handleChange(e, "lecturer", index, subIndex)}
+                  className="form-control"
+                />
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={() => handleAddField("lecturers", index)}
+              className="btn btn-secondary mb-3"
+            >
+              Add Lecturer
+            </button>
+
+            <h4>Gallery:</h4>
+            {university.gallery.map((image, subIndex) => (
+              <div key={subIndex} className="mb-3">
+                <label
+                  htmlFor={`gallery-imageUrl-${index}-${subIndex}`}
+                  className="form-label"
+                >
+                  Image URL:
+                </label>
+                <input
+                  type="text"
+                  id={`gallery-imageUrl-${index}-${subIndex}`}
+                  name="imageUrl"
+                  value={image.imageUrl}
+                  onChange={(e) => handleChange(e, "gallery", index, subIndex)}
+                  className="form-control"
+                />
+                <label
+                  htmlFor={`gallery-description-${index}-${subIndex}`}
+                  className="form-label"
+                >
+                  Description:
+                </label>
+                <input
+                  type="text"
+                  id={`gallery-description-${index}-${subIndex}`}
+                  name="description"
+                  value={image.description}
+                  onChange={(e) => handleChange(e, "gallery", index, subIndex)}
+                  className="form-control"
+                />
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={() => handleAddField("gallery", index)}
+              className="btn btn-secondary mb-3"
+            >
+              Add Image
+            </button>
           </div>
         ))}
-        <button
-          type="button"
-          onClick={handleAddGallery}
-          className="btn btn-secondary"
-        >
-          Add Image
-        </button>
 
         <button type="submit" className="btn btn-primary">
-          {editMode ? "Update University" : "Add University"}
+          Add County and Universities
         </button>
       </form>
 
-      <h2 className="my-4">University List</h2>
+      <h2 className="my-4">Existing Counties</h2>
       <ul className="list-group">
-        {universities.map((university) => (
-          <li
-            key={university.id}
-            className="list-group-item d-flex justify-content-between align-items-center"
-          >
-            <div>
-              <h5>{university.name}</h5>
-              <p>{university.location}</p>
-            </div>
-            <div>
-              <button
-                className="btn btn-info me-2"
-                onClick={() =>
-                  handleEdit(
-                    universities.findIndex((u) => u.id === university.id)
-                  )
-                }
-              >
-                Edit
-              </button>
-              <button
-                className="btn btn-danger"
-                onClick={() => handleDelete(university.id)}
-              >
-                Delete
-              </button>
-            </div>
+        {counties.map((county) => (
+          <li key={county.id} className="list-group-item">
+            <h4>{county.name}</h4>
+            <ul>
+              {county.universities.map((university) => (
+                <li key={university.id}>
+                  <strong>{university.name}</strong> - {university.location}
+                </li>
+              ))}
+            </ul>
           </li>
         ))}
       </ul>

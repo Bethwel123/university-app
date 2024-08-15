@@ -9,11 +9,18 @@ const UniversityDetails = () => {
     fetch("http://localhost:3000/counties")
       .then((res) => res.json())
       .then((data) => {
-        const targetUniversity = data
-          .flatMap((county) => county.universities)
-          .find((uni) => uni.id === universityId);
+        // Flatten the data to get all universities from all counties
+        const universities = data.flatMap((county) => county.universities);
+
+        // Find the specific university by its ID
+        const targetUniversity = universities.find(
+          (uni) => uni.id.toString() === universityId
+        );
+
         if (targetUniversity) {
           setUniversity(targetUniversity);
+        } else {
+          console.error("University not found");
         }
       })
       .catch((error) => console.error("Error fetching data:", error));
@@ -27,37 +34,48 @@ const UniversityDetails = () => {
     <div className="container">
       <h1>{university.name}</h1>
       <p>Location: {university.location}</p>
+
       <h3>Programmes and Curriculum:</h3>
       <ul>
         {university.programmes.map((programme, index) => (
           <li key={index}>
             <strong>{programme.name}</strong>
-            <ul>
-              {programme.units.map((unit, idx) => (
-                <li key={idx}>{unit}</li>
-              ))}
-            </ul>
+            <p>{programme.curriculum}</p>
           </li>
         ))}
       </ul>
-      <h3>Facilities and Lecturer Profiles:</h3>
+
+      <h3>Facilities:</h3>
       <ul>
         {university.facilities.map((facility, index) => (
-          <li key={index}>{facility}</li>
+          <li key={index}>
+            <strong>{facility.name}</strong>
+            <p>{facility.description}</p>
+          </li>
         ))}
       </ul>
+
       <h3>Lecturers:</h3>
       <ul>
         {university.lecturers.map((lecturer, index) => (
           <li key={index}>
-            <strong>{lecturer.name}</strong> - {lecturer.profile}
+            <strong>{lecturer.name}</strong>
+            <p>{lecturer.profile}</p>
           </li>
         ))}
       </ul>
+
       <h3>Gallery:</h3>
       <div className="gallery">
         {university.gallery.map((image, index) => (
-          <img key={index} src={image.imageUrl} alt="" />
+          <div key={index}>
+            <img
+              src={image.imageUrl}
+              alt={`Gallery ${index + 1}`}
+              className="img-fluid"
+            />
+            <p>{image.description}</p>
+          </div>
         ))}
       </div>
     </div>

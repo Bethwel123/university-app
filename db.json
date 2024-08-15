@@ -1,91 +1,12 @@
 {
   "counties": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Nairobi",
-      "universities": [
-        {
-          "name": "University of Nairobi",
-          "programmes": [
-            {
-              "name": "Computer Science",
-              "curriculum": "Details about the Computer Science curriculum."
-            },
-            {
-              "name": "Business Administration",
-              "curriculum": "Details about the Business Administration curriculum."
-            }
-          ],
-          "facilities": [
-            {
-              "name": "Library",
-              "description": "State-of-the-art library with vast resources."
-            },
-            {
-              "name": "Sports Complex",
-              "description": "Modern sports complex with facilities for various sports."
-            }
-          ],
-          "lecturers": [
-            {
-              "name": "Dr. Jane Doe",
-              "profile": "Expert in Computer Science with 10 years of experience."
-            },
-            {
-              "name": "Prof. John Smith",
-              "profile": "Renowned Business Administration lecturer."
-            }
-          ],
-          "gallery": [
-            {
-              "imageUrl": "./images/uonbuilding.jpg",
-              "description": "Main campus building."
-            }
-          ]
-        },
-        {
-          "name": "Jomo Kenyatta University",
-          "programmes": [
-            {
-              "name": "Nursing",
-              "curriculum": "Details about the Nursing curriculum."
-            },
-            {
-              "name": "Engineering",
-              "curriculum": "Details about the Engineering curriculum."
-            }
-          ],
-          "facilities": [
-            {
-              "name": "Laboratories",
-              "description": "Well-equipped labs for science and engineering."
-            },
-            {
-              "name": "Student Center",
-              "description": "Hub for student activities and socializing."
-            }
-          ],
-          "lecturers": [
-            {
-              "name": "Dr. Mary Johnson",
-              "profile": "Experienced Nursing educator with a focus on public health."
-            },
-            {
-              "name": "Prof. James Brown",
-              "profile": "Leading expert in Engineering and Innovation."
-            }
-          ],
-          "gallery": [
-            {
-              "imageUrl": "./images/jkuatimage.jpg",
-              "description": "Jomo Kenyatta University buildings"
-            }
-          ]
-        }
-      ]
+      "universities": []
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Kiambu",
       "universities": [
         {
@@ -169,7 +90,7 @@
       ]
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Mombasa",
       "universities": [
         {
@@ -254,7 +175,7 @@
       ]
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Kisumu",
       "universities": [
         {
@@ -338,7 +259,7 @@
       ]
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Machakos",
       "universities": [
         {
