@@ -1,0 +1,425 @@
+{
+  "counties": [
+    {
+      "id": 1,
+      "name": "Nairobi",
+      "universities": [
+        {
+          "name": "University of Nairobi",
+          "programmes": [
+            {
+              "name": "Computer Science",
+              "curriculum": "Details about the Computer Science curriculum."
+            },
+            {
+              "name": "Business Administration",
+              "curriculum": "Details about the Business Administration curriculum."
+            }
+          ],
+          "facilities": [
+            {
+              "name": "Library",
+              "description": "State-of-the-art library with vast resources."
+            },
+            {
+              "name": "Sports Complex",
+              "description": "Modern sports complex with facilities for various sports."
+            }
+          ],
+          "lecturers": [
+            {
+              "name": "Dr. Jane Doe",
+              "profile": "Expert in Computer Science with 10 years of experience."
+            },
+            {
+              "name": "Prof. John Smith",
+              "profile": "Renowned Business Administration lecturer."
+            }
+          ],
+          "gallery": [
+            {
+              "imageUrl": "./images/uonbuilding.jpg",
+              "description": "Main campus building."
+            }
+          ]
+        },
+        {
+          "name": "Jomo Kenyatta University",
+          "programmes": [
+            {
+              "name": "Nursing",
+              "curriculum": "Details about the Nursing curriculum."
+            },
+            {
+              "name": "Engineering",
+              "curriculum": "Details about the Engineering curriculum."
+            }
+          ],
+          "facilities": [
+            {
+              "name": "Laboratories",
+              "description": "Well-equipped labs for science and engineering."
+            },
+            {
+              "name": "Student Center",
+              "description": "Hub for student activities and socializing."
+            }
+          ],
+          "lecturers": [
+            {
+              "name": "Dr. Mary Johnson",
+              "profile": "Experienced Nursing educator with a focus on public health."
+            },
+            {
+              "name": "Prof. James Brown",
+              "profile": "Leading expert in Engineering and Innovation."
+            }
+          ],
+          "gallery": [
+            {
+              "imageUrl": "./images/jkuatimage.jpg",
+              "description": "Jomo Kenyatta University buildings"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Kiambu",
+      "universities": [
+        {
+          "name": "Kenyatta University",
+          "programmes": [
+            {
+              "name": "Architecture",
+              "curriculum": "Details about the Architecture curriculum."
+            },
+            {
+              "name": "Education",
+              "curriculum": "Details about the Education curriculum."
+            }
+          ],
+          "facilities": [
+            {
+              "name": "Auditorium",
+              "description": "Large auditorium for events and lectures."
+            },
+            {
+              "name": "Hostels",
+              "description": "Comfortable and secure accommodation for students."
+            }
+          ],
+          "lecturers": [
+            {
+              "name": "Dr. Emily Davis",
+              "profile": "Architectural expert with significant industry experience."
+            },
+            {
+              "name": "Prof. Michael Wilson",
+              "profile": "Veteran educator in the field of Education and Curriculum."
+            }
+          ],
+          "gallery": [
+            {
+              "imageUrl": "./images/ku.jpg",
+              "description": "Kenyatta University gate"
+            }
+          ]
+        },
+        {
+          "name": "Mount Kenya University",
+          "programmes": [
+            {
+              "name": "Law",
+              "curriculum": "Details about the Law curriculum."
+            },
+            {
+              "name": "Medicine",
+              "curriculum": "Details about the Medicine curriculum."
+            }
+          ],
+          "facilities": [
+            {
+              "name": "Cafeteria",
+              "description": "Variety of meal options available at the university cafeteria."
+            },
+            {
+              "name": "Medical Center",
+              "description": "On-campus medical services for students and staff."
+            }
+          ],
+          "lecturers": [
+            {
+              "name": "Dr. Linda White",
+              "profile": "Law professor specializing in Constitutional Law."
+            },
+            {
+              "name": "Prof. William Harris",
+              "profile": "Medical educator with a focus on surgery and research."
+            }
+          ],
+          "gallery": [
+            {
+              "imageUrl": "./images/mku.jpg",
+              "description": "Mount Kenya University Building"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Mombasa",
+      "universities": [
+        {
+          "name": "Technical University of Mombasa",
+          "programmes": [
+            {
+              "name": "Pharmacy",
+              "curriculum": "Details about the Pharmacy curriculum."
+            },
+            {
+              "name": "Environmental Science",
+              "curriculum": "Details about the Environmental Science curriculum."
+            }
+          ],
+          "facilities": [
+            {
+              "name": "Gymnasium",
+              "description": "Well-equipped gym for fitness enthusiasts."
+            },
+            {
+              "name": "Art Studio",
+              "description": "Creative space for students interested in the arts."
+            }
+          ],
+          "lecturers": [
+            {
+              "name": "Dr. Patricia Green",
+              "profile": "Pharmacy professor with a passion for pharmaceutical research."
+            },
+            {
+              "name": "Prof. Robert Lee",
+              "profile": "Environmental Science expert with a focus on sustainability."
+            }
+          ],
+          "gallery": [
+            {
+              "imageUrl": "/images/Tum.jpg",
+              "description": "Administration block"
+            },
+            {
+              "name": "Pwani University",
+              "location": "Mombasa",
+              "programmes": [
+                {
+                  "name": "Tourism Management",
+                  "curriculum": "Details about the Tourism Management curriculum."
+                },
+                {
+                  "name": "Marine Engineering",
+                  "curriculum": "Details about the Marine Engineering curriculum."
+                }
+              ],
+              "facilities": [
+                {
+                  "name": "Swimming Pool",
+                  "description": "Olympic-sized swimming pool available for students."
+                },
+                {
+                  "name": "IT Lab",
+                  "description": "High-tech IT lab for computer studies."
+                }
+              ],
+              "lecturers": [
+                {
+                  "name": "Dr. Nancy Walker",
+                  "profile": "Tourism Management lecturer with global industry experience."
+                },
+                {
+                  "name": "Prof. Thomas Hall",
+                  "profile": "Marine Engineering expert with a focus on naval architecture."
+                }
+              ],
+              "gallery": [
+                {
+                  "imageUrl": "./images/pwaniUniversity.jpg",
+                  "description": "Pwani University Gate"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Kisumu",
+      "universities": [
+        {
+          "name": "Maseno University",
+          "programmes": [
+            {
+              "name": "Agriculture",
+              "curriculum": "Details about the Agriculture curriculum."
+            },
+            {
+              "name": "ICT",
+              "curriculum": "Details about the ICT curriculum."
+            }
+          ],
+          "facilities": [
+            {
+              "name": "Music Room",
+              "description": "Fully equipped music room for practice and performances."
+            },
+            {
+              "name": "Conference Hall",
+              "description": "Spacious hall for conferences and seminars."
+            }
+          ],
+          "lecturers": [
+            {
+              "name": "Dr. Barbara Allen",
+              "profile": "Agriculture professor with a focus on sustainable farming."
+            },
+            {
+              "name": "Prof. Kevin Young",
+              "profile": "ICT expert with a focus on cybersecurity."
+            }
+          ],
+          "gallery": [
+            {
+              "imageUrl": "./images/maseno.jpg",
+              "description": "Maseno University"
+            }
+          ]
+        },
+        {
+          "name": "Great Lakes University of Kisumu",
+          "programmes": [
+            {
+              "name": "Economics",
+              "curriculum": "Details about the Economics curriculum."
+            },
+            {
+              "name": "Public Health",
+              "curriculum": "Details about the Public Health curriculum."
+            }
+          ],
+          "facilities": [
+            {
+              "name": "Research Center",
+              "description": "Advanced research center with modern equipment."
+            },
+            {
+              "name": "Lecture Halls",
+              "description": "Spacious and well-equipped lecture halls."
+            }
+          ],
+          "lecturers": [
+            {
+              "name": "Dr. Steven Martin",
+              "profile": "Economics professor with a focus on macroeconomics."
+            },
+            {
+              "name": "Prof. Lisa Thompson",
+              "profile": "Public Health expert with extensive research experience."
+            }
+          ],
+          "gallery": [
+            {
+              "imageUrl": "./images/gluk.jpg",
+              "description": "Great lake university of Kisumu aerial view"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Machakos",
+      "universities": [
+        {
+          "name": "Machakos University",
+          "programmes": [
+            {
+              "name": "Business Administration",
+              "curriculum": "Details about the Business Administration curriculum."
+            },
+            {
+              "name": "Education",
+              "curriculum": "Details about the Education curriculum."
+            }
+          ],
+          "facilities": [
+            {
+              "name": "Library",
+              "description": "Well-stocked library with a wide range of resources."
+            },
+            {
+              "name": "Sports Field",
+              "description": "Large sports field for various sports and activities."
+            }
+          ],
+          "lecturers": [
+            {
+              "name": "Dr. Rachel Brown",
+              "profile": "Business Administration professor with industry experience."
+            },
+            {
+              "name": "Prof. David Lee",
+              "profile": "Education expert with a focus on curriculum development."
+            }
+          ],
+          "gallery": [
+            {
+              "imageUrl": "./images/machakosUniversity.jpg",
+              "description": "Machakos University Main Campus"
+            }
+          ]
+        },
+        {
+          "name": "South Eastern Kenya University",
+          "programmes": [
+            {
+              "name": "Agriculture",
+              "curriculum": "Details about the Agriculture curriculum."
+            },
+            {
+              "name": "Environmental Science",
+              "curriculum": "Details about the Environmental Science curriculum."
+            }
+          ],
+          "facilities": [
+            {
+              "name": "Laboratories",
+              "description": "Well-equipped laboratories for science and engineering."
+            },
+            {
+              "name": "Student Center",
+              "description": "Hub for student activities and socializing."
+            }
+          ],
+          "lecturers": [
+            {
+              "name": "Dr. James Wilson",
+              "profile": "Agriculture professor with a focus on sustainable farming."
+            },
+            {
+              "name": "Prof. Emily Taylor",
+              "profile": "Environmental Science expert with a focus on conservation."
+            }
+          ],
+          "gallery": [
+            {
+              "imageUrl": "./images/seku.jpg",
+              "description": "South Eastern Kenya University Main Gate"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
